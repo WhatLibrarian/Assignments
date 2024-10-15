@@ -69,7 +69,7 @@ public class wordsearch {
                                 canPlace = false;
                                 break;
                         } // end of if loop
-                } // end of for check placement method.
+                } // end of for check placement method. 
 
                 // places the words horizontally
                 if (canPlace) {
@@ -131,3 +131,4 @@ public static void intro() {// Introductory Text
 } // end of intro text
 
 } // end of class
+//updated
