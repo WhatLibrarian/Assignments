@@ -23,9 +23,9 @@ public class wordsearch {
         // While loop to accept user words and validate (for bonus points!)
         while (wordCount < maxWordCount) {
             System.out.println("Enter word " + (wordCount + 1) + ": ");
-            String input = wordSc.nextLine().toUpperCase();
+            String input = wordSc.nextLine().toLowerCase();
 
-            if (input.length() <= maxWordLength && input.matches("[A-Z]+")) {
+            if (input.length() <= maxWordLength && input.matches("[a-z]+")) {
                 words[wordCount] = input; // Store valid word
                 wordCount++; // Increment the word count
             } else {
