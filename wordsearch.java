@@ -1,5 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
+import java.io.File;  // Import the File class
+
 public class wordsearch {
     // constants object file
     public static final int maxWordCount = 5; // max number of words
@@ -12,38 +14,11 @@ public class wordsearch {
 
     private static char[][] grid = new char[gridSize][gridSize];  // initializes a mulidimensional Char Array
 
-    public static void main(String[] args) {
-        intro();
+public static void main(String[] args) {
         firstMenu();
-        
-           /*  Scanner wordSc = new Scanner(System.in);
-            int choiceMenu = wordSc.nextInt();
-
-            switch (choiceMenu) {
-                case 1:
-                    for (int i = 0; i < gridSize; i++) {  // initializes a grid with '-'
-                        for (int j = 0; j < gridSize; j++) {
-                            grid[i][j] = '-';
-                        }
-                    }
-                    enterWords(); // starts the user created wordsearch
-                    System.out.println("TEST TEST TEST!");
-                    break;
-                case 2:
-                    // print grid from file
-                    //Ask if user wants to see the answers
-                    break;
-                case 3:
-                    // print grid from file
-                    break;
-                case 4: 
-                    // print grid from file
-                    break;
-                default:
-                    System.out.println("Sorry, please enter a number between 1 and 4");
-            }//end of switch */
-        //wordSc.close(); // closing the scanner for efficiencies.
+        wordSc.close(); // closing the scanner for efficiencies.
 } // end of Main
+
 
 // Method to check if the word can be placed in the grid
 private static boolean canPlaceWord(char[][] grid, String word, int startRow, int startCol, boolean isHorz) {
@@ -64,6 +39,51 @@ public static void placeWordInGrid(char[][] grid, String word, int startRow, int
         } else {
             grid[startRow + i][startCol] = word.charAt(i);
         }
+    }
+}
+
+//Method to clear the grid
+public static void clearGrid () {
+    for (int i=0; i < gridSize; i++) {
+        for (int j=0; j < gridSize; j++) {
+            grid[i][j] = '-';
+        }
+    } 
+
+}
+
+//Method to fill grid with random chars.
+public static void randChars (){
+    Random rand = new Random();
+    for (int i = 0; i < gridSize; i++) {
+        for (int j = 0; j < gridSize; j++) {
+            if (grid[i][j] == '-') {  // If the cell is empty, fill it with a random char
+                grid[i][j] = (char) (rand.nextInt(26) + 'a');  // Random lowercase alphabet
+            }
+        }
+    }
+}
+
+//Method to load puzzle from a file for BONUS POINTS
+public static void puzzleFile (String fileName) {
+    try {
+        clearGrid(); // Reset the grid
+        File puzzleFile = new File(fileName);
+        Scanner fileReader = new Scanner(puzzleFile);
+        wordCount = 0; // Reset the word count
+
+        // Read words from the file, ensuring we don't exceed the maximum word count
+        while (fileReader.hasNextLine() && wordCount < maxWordCount) {
+            String fileWords = fileReader.nextLine();
+            words[wordCount] = fileWords;
+            wordCount++;
+        }
+
+        fileReader.close(); // Close the file after reading
+        gridFill(); // Fill the grid with the words
+    } catch (Exception e) {
+        System.out.println("Error: Unable to read from file " + fileName);
+        e.printStackTrace(); // Print the error for debugging
     }
 }
 
@@ -96,6 +116,10 @@ while (wordCount < maxWordCount) {
                 + " characters and with no spaces.");
         }
     }
+    gridFill();
+}
+
+public static void gridFill(){
 
     // randomly place words in grid verticial and horizontal (not diagonal)
     Random randPlacement = new Random(); // will pick a random int to use to place words
@@ -124,60 +148,99 @@ while (wordCount < maxWordCount) {
                } // end if true loop
         } //end of for loop 
 
-    System.out.println("Thank you for your words!  Now do you want to see:");
+        boolean sameMenu = true;
+        while (sameMenu) {
+    System.out.println("Thank you for your choice!  Now do you want to see:");
     System.out.println("1. The puzzle without the answers.");
-    System.out.println("2. The puzzle with solution.");
+    System.out.println("2. The puzzle with solution.");  
+    System.out.println("3. Go back to main menu");
+    System.out.print("Your viewing choice: ");
     Scanner wordSc = new Scanner(System.in);
     int puzzle = wordSc.nextInt(); 
     switch (puzzle) {
         case 1: 
-            //puzzle with alpha chars
+            randChars ();
+            printSolution(grid);
             break;
         case 2:
             printSolution(grid);
             break;
+        case 3: 
+            sameMenu = false;
+            break;
         default:
             System.out.println("Please choose either 1 or 2");
     } 
+    }
 }  
 // end Method to ask for, accept and validate users words. 
 
 public static void firstMenu() {
-    System.out.println("Your choice: "); 
-    int choiceMenu = wordSc.nextInt();
+    intro();
+    
+    boolean menuLoop = true;
 
-    switch (choiceMenu) {
-        case 1:
-            // Initialize the grid with '-'
-            for (int i = 0; i < gridSize; i++) {
-                for (int j = 0; j < gridSize; j++) {
-                    grid[i][j] = '-';
-                }
-            }
-            enterWords(); // starts the user-created wordsearch
-            break;
-        case 2:
-            System.out.println("Display a pre-made wordsearch.");
-            // Code for pre-made wordsearch
-            break;
-        case 3:
-            System.out.println("Another option selected.");
-            // Handle another case
-            break;
-        case 4:
-            System.out.println("Another option selected.");
-            // Handle another case
-            break;
-        default:
-            System.out.println("Sorry, please enter a number between 1 and 4.");
-    }
+    do  {
+        try {
+        System.out.print("Your choice: "); 
+        int choiceMenu = wordSc.nextInt(); 
+        wordSc.nextLine(); // added to clear a leftover new line
 
-    wordSc.close(); // close the Scanner used for menu input
+            switch (choiceMenu) {
+                case 1:
+                    clearGrid();
+                    // Initialize the grid with '-'
+                    for (int i = 0; i < gridSize; i++) {
+                        for (int j = 0; j < gridSize; j++) {
+                            grid[i][j] = '-';
+                        }
+                    }
+                    enterWords(); // starts the user-created wordsearch
+                    break;
+                case 2:
+                    System.out.println("Flowers");
+                    clearGrid();
+                    // read words from a file
+                    File newPuz = new File ("flowers.txt");
+                    Scanner fileReader = new Scanner(newPuz);
+                    wordCount = 0; // needed to reset this!  error initially
+
+                    while (fileReader.hasNextLine() && wordCount < maxWordCount){
+                    String fileWords = fileReader.nextLine();
+                    words[wordCount] = fileWords;
+                    wordCount++;
+                    //System.out.println(words);
+                    }
+                    fileReader.close();
+                    gridFill();
+                    break;
+                case 3:
+                    System.out.println("Vegetables");
+                    puzzleFile ("vegetables.txt");
+                    break;
+                case 4:
+                    System.out.println("Animals");
+                    puzzleFile ("animals.txt");
+                    break;
+                case 5: 
+                    System.out.println("Thank you and Goodbye!");
+                    break;
+                default:
+                System.out.println("Sorry, please enter a number between 1 and 5.");
+            } // end switch case
+        } catch (Exception e) {
+                System.out.println("Invalid input! Please enter a number between 1 and 5.");
+                wordSc.nextInt(); // Clear the invalid input
+                } 
+} // end of do loop
+    while (menuLoop);
+
+  wordSc.close(); // close the Scanner used for menu input
 }
 
 public static void intro() {// Introductory Text
-    System.out.println("Welcome to Java Wordsearch.");
-    System.out.println("You can choose to enter your own word list or choose from a few pre-populated vocab lists");
+    System.out.println("\u001B[1m \tWelcome to Java Wordsearch! \033[0m");
+    System.out.println("You can choose to enter your own word list or choose from a few pre-populated vocab lists - Have Fun!");
     System.out.println("1: Your own words");
     System.out.println("2: Flowers");
     System.out.println("3. Vegetables");
