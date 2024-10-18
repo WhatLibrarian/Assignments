@@ -1,5 +1,11 @@
 https://www.baeldung.com/java-character-ascii-value
 https://www.cs.cmu.edu/~pattis/15-1XX/common/handouts/ascii.html
+//Bonus
+////Validation on user input.  Small main method. 
+//References
+//// https://www.geeksforgeeks.org/search-a-word-in-a-2d-grid-of-characters/
+//// https://www.geeksforgeeks.org/check-if-a-word-exists-in-a-grid-or-not/
+//// https://gist.github.com/R3DHULK/b21adcd7bd8904507023880f80934ca0
 
 I had to ask chatgpt for some help on a chunk of code.  I had this piece which was duplicating functionality (canPlace was being defined more than once).  I knew this was not efficient and following the first rule of programming (be lazy!) I decided to ask the Hallucinator in Chief to see if it could help.
 

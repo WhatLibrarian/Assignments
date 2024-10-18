@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class ghws {
+public class diagnol {
     private static final int ROWS = 10;
     private static final int COLS = 10;
     private static final char EMPTY_CELL = '-';
