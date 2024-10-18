@@ -13,28 +13,13 @@ public class wordsearch {
     public static final int maxWordLength = 8; // max word length
     public static final int gridSize = (maxWordLength * 3); // in case bigger grid needed
 
+    private static Scanner wordSc = new Scanner(System.in);
+    private static String[] words = new String[maxWordCount]; // single array to store user words
+    private static int wordCount = 0; // tracks number of words entered. Starts at 0
+
     public static void main(String[] args) {
         intro();
-
-        // Method to ask for, accept, and validate users words.
-        Scanner wordSc = new Scanner(System.in);
-        String[] words = new String[maxWordCount]; // single array to store user words
-        int wordCount = 0; // tracks number of words entered. Starts at 0
-        
-        // While loop to accept user words and validate (for bonus points!)
-        while (wordCount < maxWordCount) {
-            System.out.println("Enter word " + (wordCount + 1) + ": ");
-            String input = wordSc.nextLine().toLowerCase();
-
-            if (input.length() <= maxWordLength && input.matches("[a-z]+")) {
-                words[wordCount] = input; // Store valid word
-                wordCount++; // Increment the word count
-            } else {
-                System.out.println("Invalid word. Make sure it's alphabetic, under " + maxWordLength
-                        + " characters and with no spaces.");
-                }
-            }   
-        // end Method to ask for, accept and validate users words.
+        enterWords();
         
         // create the grid and fill with non-alpha chars for 
         // visual representation in troubleshooting
@@ -74,6 +59,7 @@ public class wordsearch {
 
             // Print the final grid
             printGrid(grid);
+            wordSc.close(); // closing the scanner for efficiencies.
 } // end of Main
 
 // Method to check if the word can be placed in the grid
@@ -107,6 +93,25 @@ public static void printGrid(char[][] grid) {
         System.out.println(); // Move to the next line after each row
     } // end of for loop
  } // end of method to print Grid with words placed
+
+
+// Method to ask for, accept, and validate users words.
+// While loop to accept user words and validate (for bonus points!)
+public static void enterWords () {
+while (wordCount < maxWordCount) {
+    System.out.println("Enter word " + (wordCount + 1) + ": ");
+    String input = wordSc.nextLine().toLowerCase();
+
+    if (input.length() <= maxWordLength && input.matches("[a-z]+")) {
+        words[wordCount] = input; // Store valid word
+        wordCount++; // Increment the word count
+    } else {
+        System.out.println("Invalid word. Make sure it's alphabetic, under " + maxWordLength
+                + " characters and with no spaces.");
+        }
+    } 
+}  
+// end Method to ask for, accept and validate users words. 
 
 public static void intro() {// Introductory Text
     System.out.println("Welcome to Java Wordsearch.");
