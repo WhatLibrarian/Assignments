@@ -6,7 +6,7 @@ public class wordsearch {
     // constants object file
     public static final int maxWordCount = 5; // max number of words
     public static final int maxWordLength = 8; // max word length
-    public static final int gridSize = (maxWordLength * 3); // in case bigger grid needed
+    public static final int gridSize = (maxWordLength * 2); // in case bigger grid needed
 
     private static Scanner wordSc = new Scanner(System.in);
     private static String[] words = new String[maxWordCount]; // single array to store user words
@@ -20,12 +20,19 @@ public static void main(String[] args) {
 } // end of Main
 
 
-// Method to check if the word can be placed in the grid
 private static boolean canPlaceWord(char[][] grid, String word, int startRow, int startCol, boolean isHorz) {
+    String vowels = "aeiou";
+    
     for (int i = 0; i < word.length(); i++) {
         char gridChar = isHorz ? grid[startRow][startCol + i] : grid[startRow + i][startCol];
-        if (gridChar != '-' && gridChar != word.charAt(i)) {
-            return false; // Cannot place the word
+        char wordChar = word.charAt(i);
+
+        // Allow placement if the cell is empty ('-') or if it's a vowel and we prioritize vowels
+        if (gridChar != '-' && gridChar != wordChar) {
+            // Allow vowel overlap regardless of exact match
+            if (!(vowels.indexOf(gridChar) >= 0 && vowels.indexOf(wordChar) >= 0)) {
+                return false; // Cannot place the word if it's not a vowel or a matching character
+            }
         }
     }
     return true; // Can place the word
@@ -43,7 +50,7 @@ public static void placeWordInGrid(char[][] grid, String word, int startRow, int
 }
 
 //Method to clear the grid
-public static void clearGrid () {
+public static void clearGrid () {  // initalizes the grid with dashes
     for (int i=0; i < gridSize; i++) {
         for (int j=0; j < gridSize; j++) {
             grid[i][j] = '-';
@@ -67,7 +74,7 @@ public static void randChars (){
 //Method to load puzzle from a file for BONUS POINTS
 public static void puzzleFile (String fileName) {
     try {
-        clearGrid(); // Reset the grid
+        clearGrid(); // Resets the grid
         File puzzleFile = new File(fileName);
         Scanner fileReader = new Scanner(puzzleFile);
         wordCount = 0; // Reset the word count
@@ -85,17 +92,27 @@ public static void puzzleFile (String fileName) {
         System.out.println("Error: Unable to read from file " + fileName);
         e.printStackTrace(); // Print the error for debugging
     }
+    postChoiceMenu();
 }
 
 // Method to print Grid with words
-public static void printSolution(char[][] grid) {
+public static void printSolution() {
+    for (char[] row : grid) {
+        for (char cell : row) {
+            System.out.print(cell + " ");
+        }
+        System.out.println();
+    }
+}
+
+/*public static void printSolution (char[][] grid) {
     for (int row = 0; row < grid.length; row++) {
         for (int col = 0; col < grid[row].length; col++) {
             System.out.print(grid[row][col] + " ");
         }
         System.out.println(); // Move to the next line after each row
     } // end of for loop
- } // end of method to print Grid with words placed
+ } // end of method to print Grid with words placed */
 
 
 // Method to ask for, accept, and validate users words.
@@ -119,36 +136,32 @@ while (wordCount < maxWordCount) {
     gridFill();
 }
 
-public static void gridFill(){
+public static void gridFill(){   // fills grid with words.
 
-    // randomly place words in grid verticial and horizontal (not diagonal)
     Random randPlacement = new Random(); // will pick a random int to use to place words
 
-     //begin filling the grid with the users words.
+     //begin filling the grid with the users words in Random directions.
+     // Horizontal & Vertical.  Couldn't do diagonal.
     for (String placeWord : words) {  // start of for loop to place words in grid
-        //boolean placed = false; // validate word is not already placed
-
-        //while (!placed) {  // ! = NOT operator https://www.shehackspurple.dev/what-does-mean-in-java-7
-            boolean isHorz = randPlacement.nextBoolean(); // randomly decide direction
-            int startRow = randPlacement.nextInt(gridSize - placeWord.length());
-            int startCol = randPlacement.nextInt(gridSize - placeWord.length());
-
-            if (isHorz) {
-                startRow = randPlacement.nextInt(gridSize);
-                startCol = randPlacement.nextInt(gridSize - placeWord.length()); // isn't outside the grid horizontally
-            } else {
-                startRow = randPlacement.nextInt(gridSize - placeWord.length()); //isn't outside the grid vertically
-                startCol = randPlacement.nextInt(gridSize); 
-                }
         
-            // Can the word be placed?
-            if (canPlaceWord (grid, placeWord, startRow, startCol, isHorz)) { // if the method canPlaceWord
-               placeWordInGrid (grid, placeWord, startRow, startCol, isHorz);
-               //placed = true; // Now that word is marked as placed.
-               } // end if true loop
-        } //end of for loop 
+        //boolean placed = false; // validate word is not already placed
+        //while (!placed) {  // ! = NOT operator https://www.shehackspurple.dev/what-does-mean-in-java-7
 
+            boolean isHorz = randPlacement.nextBoolean(); // randomly decide direction
+            int startRow = randPlacement.nextInt(isHorz ? gridSize : gridSize - placeWord.length());
+            int startCol = randPlacement.nextInt(isHorz ? gridSize - placeWord.length() : gridSize);
+            
+            if (canPlaceWord(grid, placeWord, startRow, startCol, isHorz)) {
+                placeWordInGrid(grid, placeWord, startRow, startCol, isHorz);
+            }
+        } //end of for loop 
+        postChoiceMenu();
+}   // end Method to ask for, accept and validate users words.
+      
+//post choice Menu
+public static void postChoiceMenu() {
         boolean sameMenu = true;
+
         while (sameMenu) {
     System.out.println("Thank you for your choice!  Now do you want to see:");
     System.out.println("1. The puzzle without the answers.");
@@ -156,24 +169,27 @@ public static void gridFill(){
     System.out.println("3. Go back to main menu");
     System.out.print("Your viewing choice: ");
     Scanner wordSc = new Scanner(System.in);
-    int puzzle = wordSc.nextInt(); 
+    int puzzle = wordSc.nextInt();
+    wordSc.nextLine(); // Clear the buffer
+
     switch (puzzle) {
         case 1: 
-            randChars ();
-            printSolution(grid);
+            randChars ();  // fill grid around words with random letters.
+            printSolution();
             break;
         case 2:
-            printSolution(grid);
+            printSolution();
             break;
         case 3: 
             sameMenu = false;
+            firstMenu();
             break;
         default:
-            System.out.println("Please choose either 1 or 2");
-    } 
-    }
-}  
-// end Method to ask for, accept and validate users words. 
+            System.out.println("Please choose either 1 or 2 or 3.");
+    } // end switch
+    } // end while 
+} // end postChoiceMenu Method
+ 
 
 public static void firstMenu() {
     intro();
@@ -189,30 +205,11 @@ public static void firstMenu() {
             switch (choiceMenu) {
                 case 1:
                     clearGrid();
-                    // Initialize the grid with '-'
-                    for (int i = 0; i < gridSize; i++) {
-                        for (int j = 0; j < gridSize; j++) {
-                            grid[i][j] = '-';
-                        }
-                    }
                     enterWords(); // starts the user-created wordsearch
                     break;
                 case 2:
                     System.out.println("Flowers");
-                    clearGrid();
-                    // read words from a file
-                    File newPuz = new File ("flowers.txt");
-                    Scanner fileReader = new Scanner(newPuz);
-                    wordCount = 0; // needed to reset this!  error initially
-
-                    while (fileReader.hasNextLine() && wordCount < maxWordCount){
-                    String fileWords = fileReader.nextLine();
-                    words[wordCount] = fileWords;
-                    wordCount++;
-                    //System.out.println(words);
-                    }
-                    fileReader.close();
-                    gridFill();
+                    puzzleFile ("flowers.txt");
                     break;
                 case 3:
                     System.out.println("Vegetables");
@@ -224,6 +221,7 @@ public static void firstMenu() {
                     break;
                 case 5: 
                     System.out.println("Thank you and Goodbye!");
+                    System.exit(0); // Exit the program
                     break;
                 default:
                 System.out.println("Sorry, please enter a number between 1 and 5.");
@@ -245,6 +243,7 @@ public static void intro() {// Introductory Text
     System.out.println("2: Flowers");
     System.out.println("3. Vegetables");
     System.out.println("4: Animals");
+    System.out.println("5: Quit");
 } // end of intro text
 
 } // end of class
