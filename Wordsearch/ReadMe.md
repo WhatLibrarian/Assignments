@@ -1,8 +1,9 @@
-# Bonus Point
+Bonus Point
 * Validation on user input.  
 * Small main method. 
 * Bolded text in title of program.
 * Read from file a list of words then create a wordsearch without duplicating methods.
+* File exemption check
 * Words listed vertically and horizontally.
 * Use Switch/Case
 * User input validation using do/while loops

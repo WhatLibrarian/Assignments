@@ -1,5 +1,0 @@
-elephant
-dog
-cat
-fox
-bunny

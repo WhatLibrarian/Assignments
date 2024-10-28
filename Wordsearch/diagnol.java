@@ -1,3 +1,4 @@
+package Wordsearch;
 import java.util.Random;
 
 public class diagnol {
