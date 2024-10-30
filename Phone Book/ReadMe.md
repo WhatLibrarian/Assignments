@@ -15,7 +15,6 @@ Darrell -
 - Print list in table format
 
 *References*
-* https://chatgpt.com/share/67198006-a840-8001-845f-dbffa47c9b57
 * https://www.geeksforgeeks.org/how-to-sort-a-linkedlist-in-java/ 
 * https://www.youtube.com/watch?v=N6dOwBde7-M
 * Modify: 
