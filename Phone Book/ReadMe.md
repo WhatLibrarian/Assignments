@@ -4,7 +4,7 @@ Darrell -
 
  I don't have ENUMS because name, addy, city and phNum are open-ended data that users can fill with any value.  ENUMS work best with things like days of the week or months of the year where the values are known and limited.
 
- Bonus Points:
+ *Bonus Points:*
 - Case-switch, 
 - Try/Catch
 - private vars
@@ -21,6 +21,6 @@ Darrell -
 	* https://www.geeksforgeeks.org/modify-contents-linked-list/#
 	* https://www.prepbytes.com/blog/linked-list/modify-contents-of-linked-list/#tabs_desc_4643_3
 	* **Winner** https://www.geeksforgeeks.org/linkedlist-set-method-in-java/
-* Video
+* Videos
 	* object to linked list https://www.youtube.com/watch?v=1Jz89NiXr1I
 	* https://www.youtube.com/watch?v=POh2z5TWDmk
