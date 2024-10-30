@@ -1,5 +1,5 @@
 import java.util.Scanner;
-import java.util.LinkedList;
+//import java.util.LinkedList;
 // Would rather not use collections!  From Darrell.
 //Extra credit: Case-switch, Try/Catch, private.
 //Future extra Credit: enums, packages
@@ -64,6 +64,7 @@ class PhonebookManager {  // METHODS CLASS
     
                case 3: //Modify;
                  //System.out.println(phNode);
+                 modifyEntry();
                 showMenu();
                 break;
     
@@ -92,7 +93,7 @@ class PhonebookManager {  // METHODS CLASS
 
 
     public void addEntry() {
-        System.out.print("Enter name: ");
+        System.out.print("Enter full name: ");
         String name = sc.nextLine();
         System.out.print("Enter address: ");
         String addy = sc.nextLine();
@@ -107,9 +108,10 @@ class PhonebookManager {  // METHODS CLASS
 
     public void printPhonebook() {
         if (head == null) {
-            System.out.println("The phonebook is empty.");
+            System.out.println("\nThe phonebook is empty.");
             return;
         }
+        System.out.println("Name\t\tAdress\t\tCity\t\tPhone Number");
         TestClass current = head;
         while (current != null) {
             System.out.println(current.fullListing());
@@ -132,10 +134,8 @@ class PhonebookManager {  // METHODS CLASS
       //  phNode.add(TestClass);
    // }
 
-} //end of PhonebookManager CLASS!!
 
-
-/*public void modifyEntry() {
+public void modifyEntry() {
     if (head == null) {
         System.out.println("The phonebook is empty. No entry to modify.");
         return;
@@ -165,8 +165,10 @@ class PhonebookManager {  // METHODS CLASS
     if (!found) {
         System.out.println("No entry with that name found.");
     }
-} */
+}
 
+
+} //end of PhonebookManager CLASS!!
 
 // MAIN MAIN
 

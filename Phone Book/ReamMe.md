@@ -28,3 +28,10 @@ Feel free to run any extra credit ideas by me that you may have.  I love giving
 * Video
 	* object to linked list https://www.youtube.com/watch?v=1Jz89NiXr1I
 	* https://www.youtube.com/watch?v=POh2z5TWDmk
+
+
+Darrell - 
+
+ I left name a string to account for non-western naming cultures. This will account for people with mulitple last names or who reverse the usual first name first paradigm.  It does make it harder to sort. 
+
+ I don't have ENUMS because name, addy, city and phNum are open-ended data that users can fill with any value.  ENUMS work best with things like days of the week or months of the year where the values are known and limited.

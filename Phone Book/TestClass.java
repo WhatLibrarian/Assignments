@@ -15,6 +15,7 @@ public class TestClass {  //OBJECT CLASS
     }
 
     public String fullListing() {  //from class on 10/25
-        return String.format("Name: %s, Adress: %s, City: %s, Phone Number: %s", name, addy, city, phNum);
+        //return String.format("Name: %s, Adress: %s, City: %s, Phone Number: %s", name, addy, city, phNum);
+        return String.format("%s \t%s \t%s \t%s", name, addy, city, phNum);
     }
 } // END OF OBJECT CLASS
