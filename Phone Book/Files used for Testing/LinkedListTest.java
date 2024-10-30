@@ -1,7 +1,7 @@
 import java.util.*;
 //from textbook
 
-public class TestArrayAndLinkedList {
+public class LinkedListTest {
   public static void main(String[] args) {
     List<Integer> arrayList = new ArrayList<>();
     arrayList.add(1); // 1 is autoboxed to new Integer(1)
